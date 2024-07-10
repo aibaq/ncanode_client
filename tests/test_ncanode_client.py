@@ -5,7 +5,6 @@ from unittest import (
     mock,
 )
 
-
 from ncanode_client import NCANodeClient
 
 
@@ -38,10 +37,12 @@ class TestNCANodeClient(TestCase):
         response.json.return_value = {"status": 400}
         self.assertEqual(client.handle_response(response), (False, "Unknown error"))
 
-        p_error.assert_has_calls([
-            mock.call("error", extra={"status": 400}),
-            mock.call("Unknown error at NCANodeClient", extra={"status": 400})
-        ])
+        p_error.assert_has_calls(
+            [
+                mock.call("error", extra={"status": 400}),
+                mock.call("Unknown error at NCANodeClient", extra={"status": 400}),
+            ]
+        )
 
     def test_xml_verify_default(self, _, p_post):
         client = NCANodeClient()
@@ -68,11 +69,13 @@ class TestNCANodeClient(TestCase):
             "http://localhost:14579/xml/sign",
             json={
                 "xml": "some_xml",
-                "signers": [{
-                    "key": "key",
-                    "password": "password",
-                    "keyAlias": None,
-                }],
+                "signers": [
+                    {
+                        "key": "key",
+                        "password": "password",
+                        "keyAlias": None,
+                    }
+                ],
                 "clearSignatures": False,
                 "trimXml": False,
             },
@@ -83,23 +86,27 @@ class TestNCANodeClient(TestCase):
         client = NCANodeClient()
         client.xml_sign(
             "some_xml",
-            signers=[{
-                "key": "key",
-                "password": "password",
-                "keyAlias": "key_alias",
-            }],
+            signers=[
+                {
+                    "key": "key",
+                    "password": "password",
+                    "keyAlias": "key_alias",
+                }
+            ],
             clear_signatures=True,
-            trim_xml=True
+            trim_xml=True,
         )
         p_post.assert_called_once_with(
             "http://localhost:14579/xml/sign",
             json={
                 "xml": "some_xml",
-                "signers": [{
-                    "key": "key",
-                    "password": "password",
-                    "keyAlias": "key_alias",
-                }],
+                "signers": [
+                    {
+                        "key": "key",
+                        "password": "password",
+                        "keyAlias": "key_alias",
+                    }
+                ],
                 "clearSignatures": True,
                 "trimXml": True,
             },
@@ -124,12 +131,19 @@ class TestNCANodeClient(TestCase):
             timeout=30,
         )
 
-    def test_x509_info_ok(self, _, p_post):
+    def test_wsse_sign_default(self, _, p_post):
         client = NCANodeClient()
-        client.x509_info("x509", verify_ocsp=True, verify_crl=True)
+        client.wsse_sign("some_xml", key="key", password="password")
         p_post.assert_called_once_with(
-            "http://localhost:14579/x509/info",
-            json={"revocationCheck": ["OCSP", "CRL"], "certs": ["x509"]},
+            "http://localhost:14579/wsse/sign",
+            json={
+                "xml": "some_xml",
+                "key": "key",
+                "password": "password",
+                "keyAlias": None,
+                "clearSignatures": False,
+                "trimXml": False,
+            },
             timeout=30,
         )
 
@@ -140,11 +154,13 @@ class TestNCANodeClient(TestCase):
             "http://localhost:14579/cms/sign",
             json={
                 "data": "some_data",
-                "signers": [{
-                    "key": "key",
-                    "password": "password",
-                    "keyAlias": None,
-                }],
+                "signers": [
+                    {
+                        "key": "key",
+                        "password": "password",
+                        "keyAlias": None,
+                    }
+                ],
                 "withTsp": True,
                 "tsaPolicy": "TSA_GOST_POLICY",
                 "detached": False,
@@ -156,11 +172,13 @@ class TestNCANodeClient(TestCase):
         client = NCANodeClient()
         client.cms_sign(
             "some_data",
-            signers=[{
-                "key": "key",
-                "password": "password",
-                "keyAlias": "key_alias",
-            }],
+            signers=[
+                {
+                    "key": "key",
+                    "password": "password",
+                    "keyAlias": "key_alias",
+                }
+            ],
             with_tsp=False,
             tsa_policy="asdf",
             detached=True,
@@ -169,11 +187,13 @@ class TestNCANodeClient(TestCase):
             "http://localhost:14579/cms/sign",
             json={
                 "data": "some_data",
-                "signers": [{
-                    "key": "key",
-                    "password": "password",
-                    "keyAlias": "key_alias",
-                }],
+                "signers": [
+                    {
+                        "key": "key",
+                        "password": "password",
+                        "keyAlias": "key_alias",
+                    }
+                ],
                 "withTsp": False,
                 "tsaPolicy": "asdf",
                 "detached": True,
