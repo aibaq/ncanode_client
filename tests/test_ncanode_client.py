@@ -141,7 +141,6 @@ class TestNCANodeClient(TestCase):
                 "key": "key",
                 "password": "password",
                 "keyAlias": None,
-                "clearSignatures": False,
                 "trimXml": False,
             },
             timeout=30,

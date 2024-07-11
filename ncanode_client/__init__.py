@@ -87,20 +87,16 @@ class NCANodeClient:
     def wsse_sign(
         self,
         xml,
-        key=None,
-        password=None,
+        key,
+        password,
         key_alias=None,
-        clear_signatures=False,
         trim_xml=False,
     ):
-        assert key, "Either key or signers must be provided"
-
         data = {
             "key": key,
             "password": password,
             "keyAlias": key_alias,
             "xml": xml,
-            "clearSignatures": clear_signatures,
             "trimXml": trim_xml,
         }
 
