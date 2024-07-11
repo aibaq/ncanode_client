@@ -84,6 +84,30 @@ class NCANodeClient:
 
         return self.handle_response(response)
 
+    def wsse_sign(
+        self,
+        xml,
+        key,
+        password,
+        key_alias=None,
+        trim_xml=False,
+    ):
+        data = {
+            "key": key,
+            "password": password,
+            "keyAlias": key_alias,
+            "xml": xml,
+            "trimXml": trim_xml,
+        }
+
+        response = requests.post(
+            f"{self.base_url}/wsse/sign",
+            json=data,
+            timeout=self.timeout,
+        )
+
+        return self.handle_response(response)
+
     def x509_info(self, certs=None, verify_ocsp=False, verify_crl=False):
         if isinstance(certs, str):
             certs = [certs]
