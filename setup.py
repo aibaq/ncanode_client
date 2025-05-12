@@ -24,7 +24,7 @@ classifier_list = [c for c in classifiers.split("\n") if c]
 
 setup(
     name="ncanode_client",
-    version="1.0.0",
+    version="1.0.1",
     author="Aibek Prenov",
     description="NCANode python client",
     url="https://github.com/aibaq/ncanode_client",

@@ -1,5 +1,7 @@
 # ncanode python client
 
+[![codecov](https://codecov.io/gh/aibaq/ncanode_client/graph/badge.svg?token=XEL0Y87LAM)](https://codecov.io/gh/aibaq/ncanode_client)
+
 This library provides python client for ncanode server: https://github.com/malikzh/NCANode
 
 ## Installation

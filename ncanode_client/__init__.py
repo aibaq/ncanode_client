@@ -9,13 +9,14 @@ try:
     TIMEOUT = getattr(settings, "NCANODE_TIMEOUT", 30)
 except ImportError:
     BASE_URL = "http://localhost:14579"
+    BASE_URL_V2 = "http://localhost:14578"
     TIMEOUT = 30
 
 logger = logging.getLogger(__name__)
 
 
 class NCANodeClient:
-    def __init__(self, base_url=None, base_url_v2=None, timeout=None):
+    def __init__(self, base_url=None, timeout=None, base_url_v2=None):
         self.base_url = base_url or BASE_URL
         self.base_url_v2 = base_url_v2 or BASE_URL_V2
         self.timeout = timeout or TIMEOUT
