@@ -24,7 +24,7 @@ classifier_list = [c for c in classifiers.split("\n") if c]
 
 setup(
     name="ncanode_client",
-    version="1.0.1",
+    version="1.0.2",
     author="Aibek Prenov",
     description="NCANode python client",
     url="https://github.com/aibaq/ncanode_client",
@@ -37,6 +37,6 @@ setup(
     setup_requires=["pytest-runner"],
     tests_require=["tox", "pytest", "pytest-cov", "coverage"],
     include_package_data=True,
-    python_requires=">=3.8",
+    python_requires=">=3.9",
     extras_require={},
 )

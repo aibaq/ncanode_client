@@ -21,7 +21,7 @@ response = client.xml_verify(xml="signed xml value")
 ```
 
 ## Compatibility
-Python 3.8+
+Python 3.9+
 
 ## Tests
 ```bash
