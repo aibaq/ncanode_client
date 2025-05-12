@@ -1,8 +1,10 @@
-# ncanode_client
+# ncanode python client
+
+This library provides python client for ncanode server: https://github.com/malikzh/NCANode
 
 ## Installation
 ```bash
-pip install git+ssh://git@github.com/aibaq/ncanode_client.git@0.1.0
+pip install git+ssh://git@github.com/aibaq/ncanode_client.git@1.0.0
 ```
 
 
