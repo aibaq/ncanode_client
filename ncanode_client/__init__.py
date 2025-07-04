@@ -183,7 +183,13 @@ class NCANodeClient:
         return self.handle_response(response)
 
     def tsp_sign(self, data):
-        response = requests.post(f"{self.base_url}/tsp/create", json={"xml": data})
+        response = requests.post(
+            f"{self.base_url}/tsp/create",
+            json={
+                "xml": data
+            },
+            timeout=self.timeout,
+        )
         return self.handle_response_v2(response.json())
 
     def tsp_verify(self, data):
