@@ -190,7 +190,7 @@ class NCANodeClient:
             },
             timeout=self.timeout,
         )
-        return self.handle_response_v2(response.json())
+        return self.handle_response_v2(response)
 
     def tsp_verify(self, data):
         response = requests.post(
