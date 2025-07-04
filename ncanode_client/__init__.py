@@ -184,16 +184,10 @@ class NCANodeClient:
 
     def tsp_sign(self, data):
         response = requests.post(f"{self.base_url}/tsp/create", json={"xml": data})
-        response_json = response.json()
-        if response.status_code == 200 and response_json.get("message") == "OK":
-            return True, response_json.get("token", "")
-        else:
-            if message := response_json.pop("message", None):
-                logger.error(message, extra=response_json)
-                return False, message
-            else:
-                logger.error("Unknown error at NCANodeClient", extra=response_json)
-                return False, "Unknown error"
+        success, data = self.handle_response_v2(response.json())
+        if success:
+            return success, data.get("token")
+        return success, data
 
     def tsp_verify(self, data):
         response = requests.post(
