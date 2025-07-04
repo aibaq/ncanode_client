@@ -183,22 +183,17 @@ class NCANodeClient:
         return self.handle_response(response)
 
     def tsp_sign(self, data):
-        """
-        TSP api is available only in ncanode version 2
-        """
-        response = requests.post(
-            f"{self.base_url_v2}/tsp/sign",
-            json={
-                "version": "1.0",
-                "method":"TSP.sign",
-                "params": {
-                    "raw": data
-                }
-            },
-            timeout=self.timeout,
-        )
-
-        return self.handle_response_v2(response)
+        response = requests.post(f"{self.base_url}/tsp/create", json={"xml": data})
+        response_json = response.json()
+        if response.status_code == 200 and response_json.get("message") == "OK":
+            return True, response_json.get("token", "")
+        else:
+            if message := response_json.pop("message", None):
+                logger.error(message, extra=response_json)
+                return False, message
+            else:
+                logger.error("Unknown error at NCANodeClient", extra=response_json)
+                return False, "Unknown error"
 
     def tsp_verify(self, data):
         response = requests.post(
