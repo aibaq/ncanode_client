@@ -35,14 +35,14 @@ class NCANodeClient:
 
     def handle_response_v2(self, response):
         response_json = response.json()
-        succes = False
+        success = False
 
         if response_json.get("status") == 0:
-            succes = True
+            success = True
         elif response_json.get("message", "").lower() == "ok":
-            succes = True
+            success = True
 
-        if response.status_code == 200 and succes:
+        if response.status_code == 200 and success:
             return True, response_json
         else:
             if message := response_json.pop("message", None):
